@@ -1,9 +1,26 @@
 package main
 
-import "log"
+import (
+	"github.com/Ekod/go-grpc/internal/db"
+	"github.com/Ekod/go-grpc/internal/rocket"
+	"log"
+)
 
 func Run() error {
-	//TODO gRPC server initializator
+	//TODO gRPC server initializer
+	rocketStore, err := db.New()
+	if err !=nil {
+		return err
+	}
+
+	err = rocketStore.Migrate()
+	if err != nil {
+		log.Println("Failed to run migrations")
+		return err
+	}
+
+	_ = rocket.New(rocketStore)
+
 	return nil
 }
 
