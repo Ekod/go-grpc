@@ -1,3 +1,5 @@
+//go:generate mockgen -destination=rocket_mocks_text.go -package=rocket github.com/Ekod/go-grpc/internal/rocket Store
+
 package rocket
 
 import "context"
@@ -37,8 +39,8 @@ func (s Service) GetRocketByID(ctx context.Context, id string) (Rocket, error) {
 	return rkt, nil
 }
 
-// AddRocket - Добавляет рокету в store
-func (s Service) AddRocket(ctx context.Context, rkt Rocket) (Rocket, error) {
+// InsertRocket - Добавляет рокету в store
+func (s Service) InsertRocket(ctx context.Context, rkt Rocket) (Rocket, error) {
 	rkt, err := s.Store.InsertRocket(rkt)
 	if err != nil {
 		return Rocket{}, err
